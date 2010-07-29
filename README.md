@@ -46,7 +46,7 @@ See a demo of the script at [http://jsfiddle.net/bhRCg](http://jsfiddle.net/bhRC
 
 This library depends on the SWFObject library for embedding videos on the page. See the [source code](http://code.google.com/p/swfobject/source/checkout) and [documentation](http://code.google.com/p/swfobject/wiki/documentation) for SWFObject. 
 
-Google code provides a [hosted version](http://code.google.com/p/swfobject/wiki/hosted_library) of the library which can be included (compressed)
+Google Code provides a [hosted version](http://code.google.com/p/swfobject/wiki/hosted_library) of the library which can be included (compressed)
 
 	http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js
 	
