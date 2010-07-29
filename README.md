@@ -14,12 +14,12 @@ Include the YoutubePlayer and its dependency SWFObject.
 For each video that is to be embedded on the page, add a placeholder div element on the page and give it an `id`.
 
 	<div id="inception"></div>
-	<div id="easy-a"></div>
+	<div id="easyA"></div>
 
 To replace the placeholder div with the actual flash player, simply instantiate an object of YoutubePlayer and pass it the id of the placeholder div and the id of the Youtube video.
 
 	var inceptionTrailer = new YoutubePlayer('inception', '66TuSJo4dZM');
-	var easyATrailer = new YoutubePlayer('easy-a', 'DL7W6pEuAW0');
+	var easyATrailer = new YoutubePlayer('easyA', 'DL7W6pEuAW0');
 
 To listen to playback events, add a handler to the above objects for the supported events.
 
