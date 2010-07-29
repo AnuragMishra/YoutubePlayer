@@ -1,10 +1,10 @@
-# YoutubePlayer
+## YoutubePlayer
 
 YoutubePlayer is a JavaScript wrapper for Youtube's flash player and provides a simpler interface for listening to video playback events by the flash player. You can add multiple videos on the page by creating an object of YoutubePlayer for each video, and can subscribe to events on that object.
 	
 Thanks to James Coglan for coming up with some [great ideas](http://blog.jcoglan.com/2008/05/22/dispatching-youtube-api-events-to-individual-javascript-objects/) on overcoming the limited Flash-JavaScript communication offered by the Youtube APIs with a very well designed interface.
 
-# Usage
+## Usage
 
 Include the YoutubePlayer and its dependency SWFObject.
 
@@ -33,7 +33,7 @@ To listen to playback events, add a handler to the above objects for the support
 	
 See a demo of the script at [http://jsfiddle.net/bhRCg](http://jsfiddle.net/bhRCg).
 
-# List of Supported Events
+## List of Supported Events
 
 	unstarted
 	ended
@@ -42,7 +42,7 @@ See a demo of the script at [http://jsfiddle.net/bhRCg](http://jsfiddle.net/bhRC
 	buffering
 	cued
 
-# Dependencies
+## Dependencies
 
 This library depends on the SWFObject library for embedding videos on the page. See the [source code](http://code.google.com/p/swfobject/source/checkout) and [documentation](http://code.google.com/p/swfobject/wiki/documentation) for SWFObject. 
 
