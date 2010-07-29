@@ -28,7 +28,7 @@ To listen to playback events, add a handler to the above objects for the support
 	});
 
 	easyATrailer.on('playing', function() {
-		alert('Started playing Easy-A's trailer"")
+		alert("Started playing Easy-A's trailer");
 	});
 	
 See a demo of the script at [http://jsfiddle.net/bhRCg](http://jsfiddle.net/bhRCg).
