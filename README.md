@@ -21,6 +21,17 @@ To replace the placeholder div with the actual flash player, simply instantiate 
 	var inceptionTrailer = new YoutubePlayer('inception', '66TuSJo4dZM');
 	var easyATrailer = new YoutubePlayer('easyA', 'DL7W6pEuAW0');
 
+YoutubePlayer takes an optional 3rd object parameter to overload the default behavior:
+
+	var inceptionTrailer = new YoutubePlayer('inception', '66TuSJo4dZM', {
+		width: 640,
+		height: 360,
+		params: { allowFullScreen: 1 },
+		attrs:  { class: 'ytembed' }
+	});
+
+	All fields are optional, the defaults will be used if not included.
+
 To listen to playback events, add a handler to the above objects for the supported events.
 
 	inceptionTrailer.on('paused', function() {
@@ -30,8 +41,14 @@ To listen to playback events, add a handler to the above objects for the support
 	easyATrailer.on('playing', function() {
 		alert("Started playing Easy-A's trailer");
 	});
+
+The full Youtube JS API is available via the 'ref' field:
+
+	inceptionTrailer.on('playing', function() {
+		easyATrailer.ref.pauseVideo();
+	});
 	
-See a demo of the script at [http://jsfiddle.net/bhRCg](http://jsfiddle.net/bhRCg).
+See a demo of the script at [http://jsfiddle.net/bhRCg/32/](http://jsfiddle.net/bhRCg/32/).
 
 ## List of Supported Events
 

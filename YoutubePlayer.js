@@ -5,13 +5,39 @@
      * @constructor
      * @param {String} HTML id of the element containing the Youtube flash player
      * @param {String} Youtube video id
+     * @param (Object) Optional extra configuration data
      *
      * @returns {YoutubePlayer} An object of YoutubePlayer
      */
-    function YoutubePlayer(elementId, videoId) {
+    function YoutubePlayer(elementId, videoId, extra) {
         this.id = elementId;
         this.videoId = videoId;
         this.handlers = {};
+        this.ref = null;
+        
+        this.width = '425';
+        this.height = '356';
+        this.flashVersion = '8';
+        this.params = { allowScriptAccess: 'always' };
+        this.attrs = { id: this.id };
+        
+        var mergeExtras = function(from, into) {
+            for( var key in from) {
+                into[key] = from[key];
+            }
+        };
+        if(extra) {
+            if(extra.params)
+                mergeExtras( extra.params, this.params );
+            if(extra.attrs)
+                mergeExtras( extra.attrs, this.attrs );
+            if(extra.width)
+                this.width = extra.width;
+            if(extra.height)
+                this.height = extra.height;
+            if(extra.flashVersion)
+                this.flashVersion = extra.flashVersion;
+        }
 
         this.embed();
 
@@ -32,9 +58,6 @@
      *
      */
     YoutubePlayer.prototype.embed = function() {
-        var params = { allowScriptAccess: 'always' };
-        var attrs = { id: this.id };
-
         var videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}';
         videoUrl = videoUrl.replace('{videoId}', this.videoId);
         videoUrl = videoUrl.replace('{playerId}', this.id);
@@ -43,7 +66,13 @@
             throw new ReferenceError('YoutubePlayer depends on the SWFObject library but it is missing.');
         }
 
-        swfobject.embedSWF(videoUrl, this.id, '425', '356', '8', null, null, params, attrs);
+        var player = this;
+        swfobject.embedSWF(videoUrl, this.id, this.width, this.height,
+                           this.flashVersion, null, null, this.params,
+                           this.attrs, function(e){
+            player.ref = e.ref;
+        });
+        
     };
 
     /**
