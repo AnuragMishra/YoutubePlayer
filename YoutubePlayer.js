@@ -14,23 +14,24 @@
         this.videoId = videoId;
         this.handlers = {};
         this.ref = null;
-        
+
         this.width = '425';
         this.height = '356';
         this.flashVersion = '8';
         this.params = { allowScriptAccess: 'always' };
         this.attrs = { id: this.id };
-        
+
         var mergeExtras = function(from, into) {
-            for( var key in from) {
+            for(var key in from) {
                 into[key] = from[key];
             }
         };
+
         if(extra) {
             if(extra.params)
-                mergeExtras( extra.params, this.params );
+                mergeExtras(extra.params, this.params);
             if(extra.attrs)
-                mergeExtras( extra.attrs, this.attrs );
+                mergeExtras(extra.attrs, this.attrs);
             if(extra.width)
                 this.width = extra.width;
             if(extra.height)
@@ -58,7 +59,7 @@
      *
      */
     YoutubePlayer.prototype.embed = function() {
-        var videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}';
+        var videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}&version=3';
         videoUrl = videoUrl.replace('{videoId}', this.videoId);
         videoUrl = videoUrl.replace('{playerId}', this.id);
 
@@ -69,10 +70,9 @@
         var player = this;
         swfobject.embedSWF(videoUrl, this.id, this.width, this.height,
                            this.flashVersion, null, null, this.params,
-                           this.attrs, function(e){
+                           this.attrs, function(e) {
             player.ref = e.ref;
         });
-        
     };
 
     /**
