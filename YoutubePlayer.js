@@ -18,6 +18,7 @@
         this.width = '425';
         this.height = '356';
         this.flashVersion = '8';
+        this.chromeless = false;
         this.params = { allowScriptAccess: 'always' };
         this.attrs = { id: this.id };
 
@@ -38,6 +39,8 @@
                 this.height = extra.height;
             if(extra.flashVersion)
                 this.flashVersion = extra.flashVersion;
+            if(extra.chromeless)
+                this.chromeless = extra.chromeless;
         }
 
         this.embed();
@@ -59,7 +62,13 @@
      *
      */
     YoutubePlayer.prototype.embed = function() {
-        var videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}&version=3';
+        var videoUrl;
+        if (this.chromeless) {
+            videoUrl = 'http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid={playerId}&video_id={videoId}&version=3';
+        }
+        else {
+            videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}&version=3';
+        }
         videoUrl = videoUrl.replace('{videoId}', this.videoId);
         videoUrl = videoUrl.replace('{playerId}', this.id);
 
