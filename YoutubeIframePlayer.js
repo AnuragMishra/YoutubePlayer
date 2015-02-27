@@ -14,6 +14,7 @@
 		this.id = elementId;
 		this.videoId = videoId;
 		this.listeners = {};
+		this.ref = null;
 		this.width = '425';
 		this.height = '356';
 		this.playerVars = { autohide: 1, showinfo: 0 };
@@ -185,12 +186,13 @@
 	 * @param playerId {String}
 	 */
 	window.onYouTubeIframeAPIReady = function(playerId, alreadyLoaded){
-		YoutubeIframePlayer.findById(playerId).embed();
+		var firstPlayer = YoutubeIframePlayer.findById(playerId);
+		firstPlayer.ref = firstPlayer.embed();
 		if(!alreadyLoaded){
 			var instances = YoutubeIframePlayer.instances.slice();
 			instances.shift();
 			for(var i = 0; i < instances.length; i++){
-				YoutubeIframePlayer.findById(instances[i].id).embed();
+				instances[i].ref = YoutubeIframePlayer.findById(instances[i].id).embed();
 			}
 		}
 	};
