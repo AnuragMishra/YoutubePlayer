@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>YoutubeIframePlayer.js</title>
+	</head>
+	<body>
+		<div id="Player1"></div>
+		<div id="Player2"></div>
+		<script src="scripts/YoutubeIframePlayer.js"></script>
+		<script>
+			var player1 = new YoutubeIframePlayer('Player1', 'AZgQinsClLQ');
+			player1.on('playing', function () {
+				alert('player1 playing!')
+			});
+
+			window.setTimeout(function () {
+				var player2 = new YoutubeIframePlayer('Player2', 'a77rJFGoI4Q');
+				player2.on('playing', function () {
+					alert('player2 playing!')
+				});
+			}, 2000);
+		</script>
+	</body>
+</html>
