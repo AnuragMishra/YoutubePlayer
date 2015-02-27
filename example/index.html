@@ -7,17 +7,29 @@
 	<body>
 		<div id="Player1"></div>
 		<div id="Player2"></div>
+		<div id="Player3"></div>
+		<div id="Player4"></div>
 		<script src="scripts/YoutubeIframePlayer.js"></script>
 		<script>
-			var player1 = new YoutubeIframePlayer('Player1', 'AZgQinsClLQ');
+			var player1 = new YoutubeIframePlayer('Player1', 'VJEat48Fa-Y');
 			player1.on('playing', function () {
 				alert('player1 playing!')
 			});
 
+			var player2 = new YoutubeIframePlayer('Player2', '-tpSo_Hb4dM');
+			player2.on('playing', function () {
+				alert('player2 playing!')
+			});
+
 			window.setTimeout(function () {
-				var player2 = new YoutubeIframePlayer('Player2', 'a77rJFGoI4Q');
-				player2.on('playing', function () {
+				var player3 = new YoutubeIframePlayer('Player3', '-tpSo_Hb4dM');
+				player3.on('playing', function () {
 					alert('player2 playing!')
+				});
+
+				var player4 = new YoutubeIframePlayer('Player4', '-tpSo_Hb4dM');
+				player4.on('playing', function () {
+					alert('player4 playing!')
 				});
 			}, 2000);
 		</script>

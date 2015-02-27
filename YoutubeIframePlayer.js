@@ -26,7 +26,7 @@
 
 		YoutubeIframePlayer.register(this);
 		
-		if(!window.YT){
+		if(!window.YT && !YoutubeIframePlayer.onIframeAPIReady){
 			YoutubeIframePlayer.onIframeAPIReady = window.onYouTubeIframeAPIReady;
 			window.onYouTubeIframeAPIReady = bind(window.onYouTubeIframeAPIReady, this, this.id);
 			var tag = document.createElement('script');
@@ -52,6 +52,7 @@
 	 *
 	 */
 	YoutubeIframePlayer.prototype.embed = function(){
+		if(!window.YT) return;
 		return new YT.Player(this.id, {
 			events: { 'onStateChange': YoutubeIframePlayer.dispatchEvent(this.id) },
 			playerVars: this.playerVars,
@@ -192,9 +193,9 @@
 	};
 
 	function bind(method){ 
-		var fn = method, args = Array.prototype.slice.call(arguments, 1), object = args.shift(); 
+		var args = Array.prototype.slice.call(arguments, 1), object = args.shift(); 
 		return function(){ 
-			return fn.apply(object, args.concat(Array.prototype.slice.call(arguments))); 
+			return method.apply(object, args.concat(Array.prototype.slice.call(arguments))); 
 		}; 
 	}
 
