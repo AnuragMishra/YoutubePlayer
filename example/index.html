@@ -20,6 +20,9 @@
 			player2.on('playing', function () {
 				alert('player2 playing!')
 			});
+			player2.on('ended,paused,buffering,cued,unstarted', function () {
+				alert('player2 multiple events!')
+			});
 
 			window.setTimeout(function () {
 				var player3 = new YoutubeIframePlayer('Player3', '7ZFfJ4LgJHM');

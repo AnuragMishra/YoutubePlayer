@@ -68,9 +68,12 @@
 	 * @param eventName {String} name of the event
 	 * @param handler {Function} callback for the event
 	 */
-	YoutubeIframePlayer.prototype.on = function(eventName, handler){
-		this.listeners[eventName] = this.listeners[eventName] || [];
-		this.listeners[eventName].push(handler);
+	YoutubeIframePlayer.prototype.on = function(events, handler){
+		events = events.split(',');
+		for(var i = 0; i < events.length; i++){
+			this.listeners[events[i]] = this.listeners[events[i]] || [];
+			this.listeners[events[i]].push(handler);
+		}
 	};
 
 	/**
