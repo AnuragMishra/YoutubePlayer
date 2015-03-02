@@ -11,12 +11,12 @@
 		<div id="Player4"></div>
 		<script src="scripts/YoutubeIframePlayer.js"></script>
 		<script>
-			var player1 = new YoutubeIframePlayer('Player1', 'uikXSd-h4NU');
+			var player1 = new YoutubeIframePlayer('Player1', {videoId:'uikXSd-h4NU'});
 			player1.on('playing', function () {
 				alert('player1 playing!')
 			});
 
-			var player2 = new YoutubeIframePlayer('Player2', '40HquPqC6is');
+			var player2 = new YoutubeIframePlayer('Player2', {videoId:'40HquPqC6is'});
 			player2.on('playing', function () {
 				alert('player2 playing!')
 			});
@@ -25,12 +25,12 @@
 			});
 
 			window.setTimeout(function () {
-				var player3 = new YoutubeIframePlayer('Player3', '7ZFfJ4LgJHM');
+				var player3 = new YoutubeIframePlayer('Player3', {videoId:'7ZFfJ4LgJHM'});
 				player3.on('playing', function () {
 					alert('player3 playing!')
 				});
 
-				var player4 = new YoutubeIframePlayer('Player4', 'zST13wQ1qDc');
+				var player4 = new YoutubeIframePlayer('Player4', {videoId:'zST13wQ1qDc'});
 				player4.on('playing', function () {
 					alert('player4 playing!')
 				});
