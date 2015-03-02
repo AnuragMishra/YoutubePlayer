@@ -87,7 +87,7 @@
 	YoutubeIframePlayer.dispatchEvent = function(playerId){
 		var player = YoutubeIframePlayer.findById(playerId);
 		return function(state) {
-			player.notifyEvent(state.data, state.target || YoutubeIframePlayer.STATES.ready);
+			player.notifyEvent(state.target ? state.data : YoutubeIframePlayer.STATES.ready, player.ref);
 		};
 	};
 
