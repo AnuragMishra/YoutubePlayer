@@ -10,7 +10,7 @@
 		};
 		this.id = elementId;
 		this.listeners = {};
-		this.ref = null;
+		this.video = null;
 		this.options = options || this.defaults;
 		this.options.events = this.options.events || {}; 
 		YoutubeIframePlayer.register(this);
@@ -87,7 +87,7 @@
 	YoutubeIframePlayer.dispatchEvent = function(playerId){
 		var player = YoutubeIframePlayer.findById(playerId);
 		return function(state) {
-			player.notifyEvent(state.data !== null ? state.data : YoutubeIframePlayer.STATES.ready, player.ref);
+			player.notifyEvent(state.data !== null ? state.data : YoutubeIframePlayer.STATES.ready, player.video);
 		};
 	};
 
@@ -105,12 +105,12 @@
 
 	window.onYouTubeIframeAPIReady = function(playerId, alreadyLoaded){
 		var firstPlayer = YoutubeIframePlayer.findById(playerId);
-		firstPlayer.ref = firstPlayer.embed();
+		firstPlayer.video = firstPlayer.embed();
 		if(!alreadyLoaded){
 			var instances = YoutubeIframePlayer.instances.slice();
 			instances.shift();
 			for(var i = 0; i < instances.length; i++){
-				instances[i].ref = YoutubeIframePlayer.findById(instances[i].id).embed();
+				instances[i].video = YoutubeIframePlayer.findById(instances[i].id).embed();
 			}
 		}
 	};
