@@ -73,6 +73,17 @@
 	YoutubeIframePlayer.register = function(player){
 		this.instances.push(player);
 	};
+	
+	YoutubeIframePlayer.destroy = function(playerId){
+		var player = null;
+		for(var i = 0; i < this.instances.length; i++){
+			if(this.instances[i].id == playerId){
+				player = this.instances[i];
+				player.video && player.video.destroy();
+				instances.splice(i, 1);
+			}
+		}
+	};
 
 	YoutubeIframePlayer.findById = function(playerId){
 		var player = null;
