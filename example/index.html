@@ -12,27 +12,39 @@
 		<script src="scripts/YoutubeIframePlayer.js"></script>
 		<script>
 			var player1 = new YoutubeIframePlayer('Player1', {videoId:'uikXSd-h4NU'});
+			player1.on('ready', function () {
+				console.log('player1 ready');
+			});
 			player1.on('playing', function () {
-				alert('player1 playing!')
+				console.log('player1 playing!')
 			});
 
 			var player2 = new YoutubeIframePlayer('Player2', {videoId:'40HquPqC6is'});
+			player2.on('ready', function () {
+				console.log('player2 ready');
+			});
 			player2.on('playing', function () {
-				alert('player2 playing!')
+				console.log('player2 playing!')
 			});
 			player2.on('ended,paused,buffering,cued,unstarted', function () {
-				alert('player2 multiple events!')
+				console.log('player2 multiple events!')
 			});
 
 			window.setTimeout(function () {
 				var player3 = new YoutubeIframePlayer('Player3', {videoId:'7ZFfJ4LgJHM'});
+				player3.on('ready', function () {
+					console.log('player3 ready');
+				});
 				player3.on('playing', function () {
-					alert('player3 playing!')
+					console.log('player3 playing!')
 				});
 
 				var player4 = new YoutubeIframePlayer('Player4', {videoId:'zST13wQ1qDc'});
+				player4.on('ready', function () {
+					console.log('player4 ready');
+				});
 				player4.on('playing', function () {
-					alert('player4 playing!')
+					console.log('player4 playing!')
 				});
 			}, 2000);
 		</script>
