@@ -9,6 +9,7 @@
 		<div id="Player2"></div>
 		<div id="Player3"></div>
 		<div id="Player4"></div>
+		<div id="Player5"></div>
 		<script src="scripts/YoutubeIframePlayer.js"></script>
 		<script>
 			var player1 = new YoutubeIframePlayer('Player1', {videoId:'uikXSd-h4NU'});
@@ -45,6 +46,19 @@
 				});
 				player4.on('playing', function () {
 					console.log('player4 playing!')
+				});
+
+				var player5 = new YoutubeIframePlayer('Player5', {
+					playerVars: { controls:0, showinfo:0, autoplay:0, color:'white', rel:0, enablejsapi:1, loop:0, modestbranding:1, theme:'light' },
+					height: window.innerWidth * 9/16,
+					width: window.innerWidth,
+					videoId: 'HtfdVnpt61Y'
+				});
+				player5.on('ready', function () {
+					console.log('player5 ready');
+				});
+				player5.on('playing', function () {
+					console.log('player5 playing!')
 				});
 			}, 2000);
 		</script>
