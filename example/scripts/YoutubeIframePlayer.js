@@ -3,7 +3,7 @@
 	
 	function YoutubeIframePlayer(elementId, options){
 		this.defaults = {
-			playerVars: { autohide: 1, showinfo: 0, rel:0, enablejsapi:1, modestbranding:1 },
+			playerVars: { autohide: 1, showinfo: 0, rel:0, enablejsapi:1, modestbranding:1, html5:1 },
 			videoId: '',
 			width: '100%',
 			height: '100%'
