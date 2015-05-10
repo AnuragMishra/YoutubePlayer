@@ -1,5 +1,30 @@
-(function(window, document, undefined){
+/** 
+ * @author Adrian C. Miranda <adriancmiranda@gmail.com>
+ */
+(function(global, factory) {
+
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		// For CommonJS and CommonJS-like environments where a proper window is present,
+		// execute the factory and get YoutubeIframePlayer
+		// For environments that do not inherently posses a window with a document
+		// (such as Node.js), expose a YoutubeIframePlayer-making factory as module.exports
+		// This accentuates the need for the creation of a real window
+		// e.g. var YoutubeIframePlayer = require('YoutubeIframePlayer')(window);
+		module.exports = global.document ? factory(global, true) : function(w) {
+			if (!w.document) {
+				throw new Error('YoutubeIframePlayer requires a window with a document');
+			}
+			return factory(w);
+		};
+	} else {
+		factory(global);
+	}
+
+// Pass this if window is not defined yet
+}(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
 	'use strict';
+	
+	var strundefined = typeof undefined;
 	
 	function YoutubeIframePlayer(elementId, options){
 		this.defaults = {
@@ -103,16 +128,14 @@
 	};
 
 	YoutubeIframePlayer.STATES = {
-		ready:'ready',
+		ready: 'ready',
 		unstarted: -1,
-		ended:      0,
-		playing:    1,
-		paused:     2,
-		buffering:  3,
-		cued:       5
+		ended: 0,
+		playing: 1,
+		paused: 2,
+		buffering: 3,
+		cued: 5
 	};
-
-	window.YoutubeIframePlayer = YoutubeIframePlayer;
 
 	window.onYouTubeIframeAPIReady = function(playerId, alreadyLoaded){
 		var firstPlayer = YoutubeIframePlayer.findById(playerId);
@@ -132,5 +155,12 @@
 			return method.apply(object, args.concat(Array.prototype.slice.call(arguments))); 
 		}; 
 	}
+	
+	// Expose YoutubeIframePlayer identifier, even in AMD
+	// and CommonJS for browser emulators
+	if (typeof noGlobal === strundefined) {
+		window.YoutubeIframePlayer = YoutubeIframePlayer;
+	}
 
-})(this, this.document);
+	return YoutubeIframePlayer;
+}));
