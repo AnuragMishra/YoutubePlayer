@@ -1,0 +1,17 @@
+{
+  "name": "YoutubePlayer",
+  "repo": "adriancmiranda/YoutubePlayer",
+  "version": "0.0.1",
+  "description": "YouTube Player API Reference for iframe Embeds",
+  "keywords": [
+    "YoutubePlayer",
+    "YoutubeAPI",
+    "component"
+  ],
+  "main": "YoutubeIframePlayer.js",
+  "scripts": [
+    "YoutubeIframePlayer.js",
+    "YoutubeIframePlayer.min.js"
+  ],
+  "license": "MIT"
+}

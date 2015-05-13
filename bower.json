@@ -1,0 +1,12 @@
+{
+  "name": "YoutubePlayer",
+  "description": "YouTube Player API Reference for iframe Embeds",
+  "version": "0.0.1",
+  "keywords": [
+    "YoutubePlayer",
+    "YoutubeAPI",
+    "component"
+  ],
+  "main": "YoutubeIframePlayer.js",
+  "license": "MIT"
+}
