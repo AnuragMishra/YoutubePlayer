@@ -1,0 +1,25 @@
+{
+	"name": "adriancmiranda/YoutubePlayer",
+	"description": "YouTube Player API Reference for iframe Embeds",
+	"type": "component",
+	"license": "MIT",
+	"support": {
+		"source": "https://github.com/adriancmiranda/YoutubePlayer"
+	},
+	"authors": [
+		{
+			"name": "Adrian C. Miranda",
+			"email": "adriancmiranda@gmail.com"
+		}
+	],
+	"extra": {
+		"component": {
+			"scripts": [
+				"YoutubeIframePlayer.js"
+			],
+			"files": [
+				"YoutubeIframePlayer.min.js"
+			]
+		}
+	}
+}

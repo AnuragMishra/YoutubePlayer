@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>YoutubeIframePlayer.js</title>
+	</head>
+	<body>
+		<div id="Player1"></div>
+		<div id="Player2"></div>
+		<div id="Player3"></div>
+		<div id="Player4"></div>
+		<div id="Player5"></div>
+		<script src="scripts/YoutubeIframePlayer.js"></script>
+		<script>
+			var player1 = new YoutubeIframePlayer('Player1', {videoId:'uikXSd-h4NU'});
+			player1.on('ready', function () {
+				console.log('player1 ready');
+			});
+			player1.on('playing', function () {
+				console.log('player1 playing!')
+			});
+
+			var player2 = new YoutubeIframePlayer('Player2', {videoId:'40HquPqC6is'});
+			player2.on('ready', function () {
+				console.log('player2 ready');
+			});
+			player2.on('playing', function () {
+				console.log('player2 playing!')
+			});
+			player2.on('ended,paused,buffering,cued,unstarted', function () {
+				console.log('player2 multiple events!')
+			});
+
+			window.setTimeout(function () {
+				var player3 = new YoutubeIframePlayer('Player3', {videoId:'7ZFfJ4LgJHM'});
+				player3.on('ready', function () {
+					console.log('player3 ready');
+				});
+				player3.on('playing', function () {
+					console.log('player3 playing!')
+				});
+
+				var player4 = new YoutubeIframePlayer('Player4', {videoId:'zST13wQ1qDc'});
+				player4.on('ready', function () {
+					console.log('player4 ready');
+				});
+				player4.on('playing', function () {
+					console.log('player4 playing!')
+				});
+
+				var player5 = new YoutubeIframePlayer('Player5', {
+					playerVars: { controls:0, showinfo:0, autoplay:0, color:'white', rel:0, enablejsapi:1, loop:0, modestbranding:1, theme:'light' },
+					height: window.innerWidth * 9/16,
+					width: window.innerWidth,
+					videoId: 'HtfdVnpt61Y'
+				});
+				player5.on('ready', function () {
+					console.log('player5 ready');
+				});
+				player5.on('playing', function () {
+					console.log('player5 playing!')
+				});
+			}, 2000);
+		</script>
+	</body>
+</html>

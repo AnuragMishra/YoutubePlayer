@@ -1,0 +1,25 @@
+{
+  "name": "YoutubePlayer",
+  "description": "YouTube Player API Reference for iframe Embeds",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adriancmiranda/YoutubePlayer.git"
+  },
+  "keywords": [
+    "YoutubePlayer",
+    "YoutubeAPI",
+    "javascript",
+    "browser",
+    "library"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/adriancmiranda/YoutubePlayer/blob/master/MIT-LICENSE.txt"
+    }
+  ],
+  "spm": {
+    "main": "YoutubeIframePlayer.js"
+  }
+}

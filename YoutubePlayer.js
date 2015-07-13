@@ -1,220 +1,251 @@
-(function(global) {
-    /**
-     * Creates a new YoutubePlayer object
-     *
-     * @constructor
-     * @param {String} HTML id of the element containing the Youtube flash player
-     * @param {String} Youtube video id
-     * @param (Object) Optional extra configuration data
-     *
-     * @returns {YoutubePlayer} An object of YoutubePlayer
-     */
-    function YoutubePlayer(elementId, videoId, extra) {
-        this.id = elementId;
-        this.videoId = videoId;
-        this.handlers = {};
-        this.ref = null;
+(function(global, factory) {
 
-        this.width = '425';
-        this.height = '356';
-        this.flashVersion = '8';
-        this.params = { allowScriptAccess: 'always' };
-        this.attrs = { id: this.id };
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		// For CommonJS and CommonJS-like environments where a proper window is present,
+		// execute the factory and get YoutubePlayer
+		// For environments that do not inherently posses a window with a document
+		// (such as Node.js), expose a YoutubePlayer-making factory as module.exports
+		// This accentuates the need for the creation of a real window
+		// e.g. var YoutubePlayer = require('YoutubePlayer')(window);
+		module.exports = global.document ? factory(global, true) : function(w) {
+			if (!w.document) {
+				throw new Error('YoutubePlayer requires a window with a document');
+			}
+			return factory(w);
+		};
+	} else {
+		factory(global);
+	}
 
-        var mergeExtras = function(from, into) {
-            for(var key in from) {
-                into[key] = from[key];
-            }
-        };
+// Pass this if window is not defined yet
+}(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+	'use strict';
+	
+	var strundefined = typeof undefined;
+	
+	/**
+	 * Creates a new YoutubePlayer object
+	 *
+	 * @constructor
+	 * @param {String} HTML id of the element containing the Youtube flash player
+	 * @param {String} Youtube video id
+	 * @param (Object) Optional extra configuration data
+	 *
+	 * @returns {YoutubePlayer} An object of YoutubePlayer
+	 */
+	function YoutubePlayer(elementId, videoId, extra) {
+		this.id = elementId;
+		this.videoId = videoId;
+		this.handlers = {};
+		this.ref = null;
 
-        if(extra) {
-            if(extra.params)
-                mergeExtras(extra.params, this.params);
-            if(extra.attrs)
-                mergeExtras(extra.attrs, this.attrs);
-            if(extra.width)
-                this.width = extra.width;
-            if(extra.height)
-                this.height = extra.height;
-            if(extra.flashVersion)
-                this.flashVersion = extra.flashVersion;
-        }
+		this.width = '425';
+		this.height = '356';
+		this.flashVersion = '8';
+		this.params = { allowScriptAccess: 'always' };
+		this.attrs = { id: this.id };
 
-        this.embed();
+		var mergeExtras = function(from, into) {
+			for(var key in from) {
+				into[key] = from[key];
+			}
+		};
 
-        YoutubePlayer.register(this);
-    }
+		if(extra) {
+			if(extra.params)
+				mergeExtras(extra.params, this.params);
+			if(extra.attrs)
+				mergeExtras(extra.attrs, this.attrs);
+			if(extra.width)
+				this.width = extra.width;
+			if(extra.height)
+				this.height = extra.height;
+			if(extra.flashVersion)
+				this.flashVersion = extra.flashVersion;
+		}
 
-    /**
-     * Embeds the Youtube video on the page replacing the placeholder
-     * element whose id was passed in the constructor.
-     *
-     * The <object> element that replaces the placeholder gets the same
-     * id as that of the placeholder
-     *
-     * This relies on the SWFObject library.
-     * @requires swfobject See http://code.google.com/p/swfobject/wiki/hosted_library
-     *
-     * @private
-     *
-     */
-    YoutubePlayer.prototype.embed = function() {
-        var videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}&version=3';
-        videoUrl = videoUrl.replace('{videoId}', this.videoId);
-        videoUrl = videoUrl.replace('{playerId}', this.id);
+		this.embed();
 
-        if(!swfobject) {
-            throw new ReferenceError('YoutubePlayer depends on the SWFObject library but it is missing.');
-        }
+		YoutubePlayer.register(this);
+	}
 
-        var player = this;
-        swfobject.embedSWF(videoUrl, this.id, this.width, this.height,
-                           this.flashVersion, null, null, this.params,
-                           this.attrs, function(e) {
-            player.ref = e.ref;
-        });
-    };
+	/**
+	 * Embeds the Youtube video on the page replacing the placeholder
+	 * element whose id was passed in the constructor.
+	 *
+	 * The <object> element that replaces the placeholder gets the same
+	 * id as that of the placeholder
+	 *
+	 * This relies on the SWFObject library.
+	 * @requires swfobject See http://code.google.com/p/swfobject/wiki/hosted_library
+	 *
+	 * @private
+	 *
+	 */
+	YoutubePlayer.prototype.embed = function() {
+		var videoUrl = 'http://www.youtube.com/v/{videoId}?enablejsapi=1&playerapiid={playerId}&version=3';
+		videoUrl = videoUrl.replace('{videoId}', this.videoId);
+		videoUrl = videoUrl.replace('{playerId}', this.id);
 
-    /**
-     * Add the given handler as a listener for the given event
-     *
-     * @param eventName {String} name of the event
-     * @param handler {Function} callback for the event
-     */
-    YoutubePlayer.prototype.on = function(eventName, handler) {
-        this.handlers[eventName] = this.handlers[eventName] || [];
-        this.handlers[eventName].push(handler);
-    };
+		if(!swfobject) {
+			throw new ReferenceError('YoutubePlayer depends on the SWFObject library but it is missing.');
+		}
 
-    /**
-     * Sets up event handlers for player state
-     * changes once it's available.
-     *
-     * @private
-     *
-     */
-    YoutubePlayer.prototype.onReady = function() {
-        var player = document.getElementById(this.id);
-        var callbackStr = 'YoutubePlayer.dispatchEvent("{id}")';
-        var callback = callbackStr.replace("{id}", this.id);
+		var player = this;
+		swfobject.embedSWF(videoUrl, this.id, this.width, this.height,
+						   this.flashVersion, null, null, this.params,
+						   this.attrs, function(e) {
+			player.ref = e.ref;
+		});
+	};
 
-        player.addEventListener('onStateChange', callback);
-    };
+	/**
+	 * Add the given handler as a listener for the given event
+	 *
+	 * @param eventName {String} name of the event
+	 * @param handler {Function} callback for the event
+	 */
+	YoutubePlayer.prototype.on = function(eventName, handler) {
+		this.handlers[eventName] = this.handlers[eventName] || [];
+		this.handlers[eventName].push(handler);
+	};
 
-    /**
-     * Receives notification of player state changes
-     *
-     * @private
-     * @param eventId {String} Youtube player event id
-     *
-     */
-    YoutubePlayer.prototype.notifyEvent = function(eventId) {
-        var states = YoutubePlayer.STATES;
+	/**
+	 * Sets up event handlers for player state
+	 * changes once it's available.
+	 *
+	 * @private
+	 *
+	 */
+	YoutubePlayer.prototype.onReady = function() {
+		var player = document.getElementById(this.id);
+		var callbackStr = 'YoutubePlayer.dispatchEvent("{id}")';
+		var callback = callbackStr.replace("{id}", this.id);
 
-        for(var eventName in states) {
-            if(states[eventName] == eventId) {
-                this.fireEvent(eventName);
-            }
-        }
-    };
+		player.addEventListener('onStateChange', callback);
+	};
 
-    /**
-     * Notify each registered subscriber of this event
-     *
-     * @param eventName {String} Name of the player event
-     */
-    YoutubePlayer.prototype.fireEvent = function(eventName) {
-        var handlers = this.handlers[eventName];
-        if(!handlers) {
-            return;
-        }
+	/**
+	 * Receives notification of player state changes
+	 *
+	 * @private
+	 * @param eventId {String} Youtube player event id
+	 *
+	 */
+	YoutubePlayer.prototype.notifyEvent = function(eventId) {
+		var states = YoutubePlayer.STATES;
 
-        for(var i = 0; i < handlers.length; i++) {
-            handlers[i](eventName);
-        }
-    };
+		for(var eventName in states) {
+			if(states[eventName] == eventId) {
+				this.fireEvent(eventName);
+			}
+		}
+	};
 
-    /**
-     * Holds instances of player objects to be able to
-     * dispatch events to them globally
-     *
-     * @private
-     */
-    YoutubePlayer.instances = [];
+	/**
+	 * Notify each registered subscriber of this event
+	 *
+	 * @param eventName {String} Name of the player event
+	 */
+	YoutubePlayer.prototype.fireEvent = function(eventName) {
+		var handlers = this.handlers[eventName];
+		if(!handlers) {
+			return;
+		}
 
-    /**
-     * @private
-     */
-    YoutubePlayer.register = function(player) {
-        this.instances.push(player);
-    };
+		for(var i = 0; i < handlers.length; i++) {
+			handlers[i](eventName);
+		}
+	};
 
-    /**
-     * Search the player object by its HTML id.
-     * Useful when dispatching events to the player object
-     * sent from the Youtube flash player
+	/**
+	 * Holds instances of player objects to be able to
+	 * dispatch events to them globally
+	 *
+	 * @private
+	 */
+	YoutubePlayer.instances = [];
 
-     * @param playerId {String} HTML id of the player object
-     * @returns {YoutubePlayer} The object of YoutubePlayer that wraps this player
-     *
-     * @private
-     */
-    YoutubePlayer.findById = function(playerId) {
-        var player = null;
+	/**
+	 * @private
+	 */
+	YoutubePlayer.register = function(player) {
+		this.instances.push(player);
+	};
 
-        for(var i = 0; i < this.instances.length; i++) {
-            if(this.instances[i].id == playerId) {
-                player = this.instances[i];
-            }
-        }
+	/**
+	 * Search the player object by its HTML id.
+	 * Useful when dispatching events to the player object
+	 * sent from the Youtube flash player
 
-        return player;
-    };
+	 * @param playerId {String} HTML id of the player object
+	 * @returns {YoutubePlayer} The object of YoutubePlayer that wraps this player
+	 *
+	 * @private
+	 */
+	YoutubePlayer.findById = function(playerId) {
+		var player = null;
 
-    /**
-     * Central event dispatcher which receives all player
-     * events directly from the flash player and dispatches
-     * them to the player object for which the event occurred.
-     *
-     * @param playerId
-     *
-     * @private
-     */
-    YoutubePlayer.dispatchEvent = function(playerId) {
-        var player = YoutubePlayer.findById(playerId);
-        return function(eventId) {
-            player.notifyEvent(eventId);
-        };
-    };
+		for(var i = 0; i < this.instances.length; i++) {
+			if(this.instances[i].id == playerId) {
+				player = this.instances[i];
+			}
+		}
 
-    /**
-     * Various state change events that the Youtube flash player triggers
-     *
-     * @private
-     */
-    YoutubePlayer.STATES = {
-        unstarted:  -1,
-        ended:      0,
-        playing:    1,
-        paused:     2,
-        buffering:  3,
-        cued:       5
-    };
+		return player;
+	};
 
-    /**
-     * Make the YoutubePlayer available globally
-     */
-    global.YoutubePlayer = YoutubePlayer;
+	/**
+	 * Central event dispatcher which receives all player
+	 * events directly from the flash player and dispatches
+	 * them to the player object for which the event occurred.
+	 *
+	 * @param playerId
+	 *
+	 * @private
+	 */
+	YoutubePlayer.dispatchEvent = function(playerId) {
+		var player = YoutubePlayer.findById(playerId);
+		return function(eventId) {
+			player.notifyEvent(eventId);
+		};
+	};
 
-    /**
-     * Create a global handler that receives notification of when
-     * the Youtube flash player has been initialized
-     * on the page
-     *
-     * @param playerId {String}
-     */
-    global.onYouTubePlayerReady = function(playerId) {
-        YoutubePlayer.findById(playerId).onReady();
-    };
+	/**
+	 * Various state change events that the Youtube flash player triggers
+	 *
+	 * @private
+	 */
+	YoutubePlayer.STATES = {
+		unstarted: -1,
+		ended: 0,
+		playing: 1,
+		paused: 2,
+		buffering: 3,
+		cued: 5
+	};
 
-})(window);
+	/**
+	 * Make the YoutubePlayer available globally
+	 */
+	window.YoutubePlayer = YoutubePlayer;
+
+	/**
+	 * Create a global handler that receives notification of when
+	 * the Youtube flash player has been initialized
+	 * on the page
+	 *
+	 * @param playerId {String}
+	 */
+	window.onYouTubePlayerReady = function(playerId) {
+		YoutubePlayer.findById(playerId).onReady();
+	};
+
+	// Expose YoutubePlayer identifier, even in AMD
+	// and CommonJS for browser emulators
+	if (typeof noGlobal === strundefined) {
+		window.YoutubePlayer = YoutubePlayer;
+	}
+
+	return YoutubePlayer;
+}));
